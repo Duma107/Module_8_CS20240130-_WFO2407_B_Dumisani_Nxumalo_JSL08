@@ -1,34 +1,60 @@
-// This one will be a little tricky. So check out this overview first: https://www.youtube.com/watch?v=sJ-c3BA-Ypo
+// Singleton Pattern Implementation for BankBranch
 
-// 1. Create a variable to store the singleton instance of the bank branch. "bankBranchInstance"
+// 1. Create a variable to store the singleton instance of the bank branch.
+let bankBranchInstance = null;
 
 // 2. Define a class called `BankBranch` for managing branch information.
+class BankBranch {
+    // 3. Constructor that initializes branch information.
+    // @param {Object} branchInfo - Information about the bank branch.
+    constructor(branchInfo) {
+        // Check if an instance already exists
+        if (!bankBranchInstance) {
+            this.branchInfo = branchInfo;
+            bankBranchInstance = this;
+        }
+        // Return the existing instance
+        return bankBranchInstance;
+    }
 
-// 3. In the `BankBranch` class:
-//    - Create a constructor that takes `branchInfo` as a parameter.
-//    - Inside the constructor, check if the `bankBranchInstance` variable is null (indicating no instance exists).
-//    - If `bankBranchInstance` is null, create a new instance with the provided `branchInfo` and assign it to `bankBranchInstance`.
-//    - Return the `bankBranchInstance` whether it's newly created or existing.
+    // 4. Method to retrieve branch information.
+    // @returns {Object} - The branch information.
+    getBranchInfo() {
+        return this.branchInfo;
+    }
 
-// 4. Add methods to the `BankBranch` class for managing branch-related information. For example, you can add a method like `getBranchInfo` to retrieve branch details.
+    // Additional method to update branch information.
+    // @param {Object} newBranchInfo - New information to update the branch.
+    updateBranchInfo(newBranchInfo) {
+        this.branchInfo = { ...this.branchInfo, ...newBranchInfo };
+    }
+}
 
-// 5. In the usage section:
-//    - Create instances of the `BankBranch` class, such as `branchA` and `branchB`, with different branch information.
-//    - Use the `getBranchInfo` method to retrieve branch information from the instances.
-//    - Verify that `branchA` and `branchB` are both referring to the same instance by comparing them using `===`.
+// 5. Usage Section
 
-// This pseudo-code provides a step-by-step explanation of how to implement the Singleton Pattern for managing a single instance of the `BankBranch` class throughout the application, ensuring that multiple instances refer to the same object.
+// Creating the first instance of BankBranch
+const branchA = new BankBranch({
+    name: "Downtown Branch",
+    address: "123 Main St",
+    manager: "Zack Schroder"
+});
 
-// NOTES:
-// This example demonstrates the Singleton pattern by creating a single instance of the `BankBranch` class.
-// Even if we attempt to create another instance of the branch, we receive the original instance,
-// ensuring that there is only one set of branch information throughout the application.
+// Creating a second instance of BankBranch
+const branchB = new BankBranch({
+    name: "Uptown Branch",
+    address: "456 Elm St",
+    manager: "Charlie Davis"
+});
 
-// - We define a `BankBranch` class that represents bank branch information.
-// - We use the Singleton pattern to ensure that there is only one instance of the `BankBranch` class.
-// - The `bankBranchInstance` variable is used to hold the single instance of the class.
-// - When a new `BankBranch` instance is created, it checks if `bankBranchInstance` already exists.
-//   If it does, it returns the existing instance; otherwise, it creates a new one.
-// - The `getBranchInfo` method allows us to retrieve the branch information from the singleton instance.
-// - We demonstrate the Singleton pattern by creating two instances (`branchA` and `branchB`) and show that they both point to the same instance,
-//   ensuring that there is only one set of branch information throughout the application.
+// Retrieving branch information from both instances
+console.log("Branch A Info:", branchA.getBranchInfo());
+console.log("Branch B Info:", branchB.getBranchInfo());
+
+// Verifying that both instances are the same
+console.log("Are branchA and branchB the same instance?", branchA === branchB);
+
+// Updating branch information using branchB
+branchB.updateBranchInfo({ manager: "Sasha Heyburgh" });
+
+// Retrieving updated branch information from branchA
+console.log("Updated Branch A Info:", branchA.getBranchInfo());
