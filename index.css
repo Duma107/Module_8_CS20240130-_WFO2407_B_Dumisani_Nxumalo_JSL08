@@ -8,13 +8,18 @@ body, p {
 
 body {
     background-image: url('manager.gif');
-    background-size: cover;
+    background-size: 100%;
     background-repeat: no-repeat;
-    background-attachment: fixed; 
+    background-attachment:inherit; 
 }
 
+img {
+    width: 100%;
+    height: 19.5cm;
+    object-fit: fill;
+}
 
-/* elegently Style the h1 element */
+/* elegentlyStyle the h1 element */
 h1 {
     background: white;
     background-clip: text;
